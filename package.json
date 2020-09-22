@@ -1,0 +1,30 @@
+{
+  "name": "better-repldb",
+  "version": "0.0.0",
+  "description": "It's @replit/database but A LOT better!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thetayloredman/better-repldb.git"
+  },
+  "keywords": [
+    "db",
+    "repl.it",
+    "replit",
+    "database",
+    "replitdb",
+    "map"
+  ],
+  "author": "BadBoyHaloCat",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thetayloredman/better-repldb/issues"
+  },
+  "homepage": "https://github.com/thetayloredman/better-repldb#readme",
+  "dependencies": {
+    "@replit/database": "^2.0.0"
+  }
+}
