@@ -49,7 +49,10 @@ class DB extends Map {
 
     /* END INTERNAL METHODS */
 
-    
+    set (key, value) {
+        this.db.set(key, value);
+        this._internalSet(key, value);
+    }
 }
 
 // Export
