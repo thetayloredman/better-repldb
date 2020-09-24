@@ -25,15 +25,14 @@ class DB extends Map {
     /* BEGIN INTERNAL METHODS */
 
     _parsePrefix (input) {
-        let output;
-        if (input.startsWith(`${this.name}:`)) {
-        output = input.split(`${this.name}:`);
-        output.shift();
-        output = output.join(`${this.name}:`);
-        } else {
-            output = `${this.name}:${input}`;
-        }
-        return output;
+        /**
+         * Credit to @kyra#0001 for this greatly simplified
+         * code, unlike my 7 line version of this. They
+         * deserve cake! xd
+         */
+        return input.startsWith(`${this.name}:`)
+  ? input.slice(this.name.length + 1)
+  : `${this.name}:${input}`;
     }
 
     _dbSet (key, value) {
