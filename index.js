@@ -35,16 +35,6 @@ class DB extends Map {
   : `${this.name}:${input}`;
     }
 
-    _dbSet (key, value) {
-        this.db.set(this._parsePrefix(key), value);
-    }
-
-    _dbGet (key) {
-        this.db.get(this._parsePrefix(key)).then((value) => {
-            return value;
-        });
-    }
-
     _mapSet (key, value) {
         super.set(key, value);
     }
@@ -54,19 +44,41 @@ class DB extends Map {
     }
 
     _fetch () {
+        super.clear();
         this.db.list().then((keys) => {
             keys.forEach((key) => {
                 if (!key.startsWith(`${this.name}:`)) {
                     return;
                 }
-                let value = this._dbGet(key);
-                this._mapSet(this._parsePrefix(key), value)
+                this.db.get(key).then((value) => {
+                    this._mapSet(this._parsePrefix(key), value)
+                });
             });
         });
-        return this;
     }
 
     /* END INTERNAL METHODS */
+
+    get (key) {
+        return this._mapGet(key);
+    }
+
+    set (key, value) {
+        let vkey = this._parsePrefix(key);
+        this.db.set(vkey, value);
+        this._mapSet(key, value);
+    }
+
+    clear () {
+        this.db.list().then((keys) => {
+            keys.forEach((key) => {
+                if (key.startsWith(`${this.name}:`)) {
+                    this.db.delete(key);
+                }
+            });
+        });
+        super.clear();
+    }
 }
 
 // Export
