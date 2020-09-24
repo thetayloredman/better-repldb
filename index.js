@@ -25,12 +25,13 @@ class DB extends Map {
     /* BEGIN INTERNAL METHODS */
 
     _parsePrefix (input) {
+        let output;
         if (input.startsWith(`${this.name}:`)) {
-        let output = input.split(`${this.name}:`);
+        output = input.split(`${this.name}:`);
         output.shift();
         output = output.join(`${this.name}:`);
         } else {
-            let output = `${this.name}:${input}`;
+            output = `${this.name}:${input}`;
         }
         return output;
     }
