@@ -35,9 +35,13 @@ class DB extends Map {
     _fetchDb () {
         this.db.list().then((keys) => {
             keys.forEach((key) => {
-                this.db.get(key).then((value) => {
-                    this._internalSet(key, value);
-                });
+                if (key.startsWith(this.name + ':')) {
+                    key = key.split(this.name + ':');
+                    key.shift();
+                    this.db.get(key).then((value) => {
+                        this._internalSet(key, value);
+                    })
+                }
             });
         });
     }
