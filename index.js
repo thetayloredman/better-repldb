@@ -15,6 +15,9 @@ class DB extends Map {
      */
     constructor (name) {
         super();
+        if (!name) {
+            throw new Error('[BRDBError] Missing "name" attribute.')
+        }
         this.db = new Database();
         this.name = name;
     }

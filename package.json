@@ -1,6 +1,6 @@
 {
   "name": "better-repldb",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "It's @replit/database but A LOT better!",
   "main": "index.js",
   "scripts": {
