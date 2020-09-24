@@ -38,6 +38,7 @@ class DB extends Map {
                 if (key.startsWith(this.name + ':')) {
                     key = key.split(this.name + ':');
                     key.shift();
+                    key = key.join(this.name + ':')
                     this.db.get(key).then((value) => {
                         this._internalSet(key, value);
                     })
