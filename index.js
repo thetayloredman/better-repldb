@@ -7,19 +7,23 @@ class DB extends Map {
      * Creates a new DB.
      * @constructor
      * @param {String} name The name of the "table" (Where all objects are stored)
+     * @param {(data: Array<Array<*>>) => void} [onReady] The function to call once the DB is ready. Provided the <Map>.entries
      * @example
      * const DB = require('better-repldb');
      * 
      * // New DB
      * const myDB = new DB("myDB");
      */
-    constructor (name) {
+    constructor (name, onReady) {
         super();
         if (!name) {
             throw new Error('[BRDBError] Missing "name" attribute.')
         }
         this.db = new Database();
         this.name = name;
+        
+        this._fetch();
+        onReady ? onReady(this.entries) : null;
     }
 
     /* BEGIN INTERNAL METHODS */
