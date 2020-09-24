@@ -24,7 +24,7 @@ class DB extends Map {
 
     /* BEGIN INTERNAL METHODS */
 
-
+    
 
     /* END INTERNAL METHODS */
 
@@ -44,6 +44,16 @@ class DB extends Map {
 
     set (key, value) {
         this.db.set(this.name + ':' + key, value)
+    }
+
+    fetch () {
+        this.db.list().then((keys) => {
+            keys.forEach((key) => {
+                this.db.get(key).then((value) => {
+                    this.set(key, value);
+                })
+            })
+        })
     }
 }
 
