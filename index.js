@@ -29,10 +29,10 @@ class DB extends Map {
         let output = input.split(`${this.name}:`);
         output.shift();
         output = output.join(`${this.name}:`);
-        return output;
         } else {
-            let output = `${this.name}:${input}`
+            let output = `${this.name}:${input}`;
         }
+        return output;
     }
 
     _dbSet (key, value) {
