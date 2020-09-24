@@ -24,35 +24,49 @@ class DB extends Map {
 
     /* BEGIN INTERNAL METHODS */
 
-    _internalSet (key, value) {
-        super.set(key, value);
+    _parsePrefix (input) {
+        if (input.startsWith(`${this.name}:`)) {
+        let output = input.split(`${this.name}:`);
+        output.shift();
+        output = output.join(`${this.name}:`);
+        return output;
+        } else {
+            let output = `${this.name}:${input}`
+        }
     }
 
-    _internalGet (key) {
-        return super.get(key);
+    _dbSet (key, value) {
+        this.db.set(this._parsePrefix(key), value);
     }
 
-    _fetchDb () {
-        this.db.list().then((keys) => {
-            keys.forEach((key) => {
-                if (key.startsWith(this.name + ':')) {
-                    key = key.split(this.name + ':');
-                    key.shift();
-                    key = key.join(this.name + ':')
-                    this.db.get(key).then((value) => {
-                        this._internalSet(key, value);
-                    })
-                }
-            });
+    _dbGet (key) {
+        this.db.get(this._parsePrefix(key)).then((value) => {
+            return value;
         });
     }
 
-    /* END INTERNAL METHODS */
-
-    set (key, value) {
-        this.db.set(key, value);
-        this._internalSet(key, value);
+    _mapSet (key, value) {
+        super.set(key, value);
     }
+
+    _mapGet (key, value) {
+        return super.get(key, value);
+    }
+
+    _fetch () {
+        this.db.list().then((keys) => {
+            keys.forEach((key) => {
+                if (!key.startsWith(`${this.name}:`)) {
+                    return;
+                }
+                let value = this._dbGet(key);
+                this._mapSet(this._parsePrefix(key), value)
+            });
+        });
+        return this;
+    }
+
+    /* END INTERNAL METHODS */
 }
 
 // Export
